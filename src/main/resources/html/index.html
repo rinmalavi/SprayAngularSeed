@@ -1,0 +1,30 @@
+<html>
+  <head>
+    <title>Angular Spray Seed</title>
+  </head>
+  <body data-ng-app="" data-ng-controller="AlikeController" >
+    <input type="text" data-ng-model="query" placeholder="Enter query..."/>
+    <input type="button" data-ng-click="getsomelistOfStrings(query)" value="Some List Of Strings"/>
+    <br>
+    <div id="resulting">
+      <ul>
+        <li data-ng-repeat="result in results">{{result}}</li>
+      </ul>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.3/angular.min.js"></script>
+    <script>
+      function AlikeController($scope, $http) {
+        $scope.getsomelistOfStrings = function (query) {
+          $http.get('/getsomelistOfStrings', {
+            params : {
+              query : query
+            }
+          }).success(function (data, status, headers, config) {
+              console.log(data);
+            $scope.results = angular.fromJson(data);
+          })
+        }
+      }
+    </script>
+  </body>
+</html>
